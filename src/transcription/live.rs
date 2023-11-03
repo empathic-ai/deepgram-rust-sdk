@@ -264,7 +264,14 @@ where
             }
 
             // This unwrap is not safe.
-            write.send(Message::binary([])).await.unwrap();
+            match write.send(Message::binary([])).await {
+                Ok(_) => {
+
+                },
+                Err(_) => {
+                    
+                },
+            }
         };
 
         let recv_task = async move {
