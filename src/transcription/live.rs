@@ -247,7 +247,14 @@ where
                     None => break,
                     Some(Ok(frame)) => {
                         // This unwrap is not safe.
-                        write.send(frame).await.unwrap();
+                        match write.send(frame).await {
+                            Ok(_) => {
+                                
+                            },
+                            Err(_) => {
+                                break;
+                            }
+                        }
                     }
                     Some(e) => {
                         let _ = dbg!(e);
@@ -267,10 +274,16 @@ where
                     Some(Ok(msg)) => {
                         if let Message::Text(txt) = msg {
                             let resp = serde_json::from_str(&txt).map_err(DeepgramError::from);
-                            tx.send(resp)
-                                .await
+                            match tx.send(resp).await {
+                                Ok(_) => {
+                                    
+                                }
+                                Err(_) => {
+                                    break;
+                                }
+                            }
                                 // This unwrap is probably not safe.
-                                .unwrap();
+                                //.unwrap();
                         }
                     }
                     Some(e) => {
