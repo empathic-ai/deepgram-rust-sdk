@@ -225,6 +225,8 @@ where
             if let Some(channels) = channels {
                 pairs.append_pair("channels", &channels.to_string());
             }
+            pairs.append_pair("model", "2-ea");
+            pairs.append_pair("tier", "nova");
         }
 
         let request = Request::builder()
@@ -269,7 +271,7 @@ where
 
                 },
                 Err(_) => {
-                    
+
                 },
             }
         };
