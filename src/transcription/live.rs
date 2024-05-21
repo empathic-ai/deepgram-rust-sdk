@@ -48,6 +48,8 @@ pub struct Word {
     pub start: f64,
     pub end: f64,
     pub confidence: f64,
+    pub speaker: Option<u32>,
+    pub speaker_confidence: Option<f64>
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -225,8 +227,11 @@ where
             if let Some(channels) = channels {
                 pairs.append_pair("channels", &channels.to_string());
             }
-            pairs.append_pair("model", "2-ea");
-            pairs.append_pair("tier", "nova");
+
+            pairs.append_pair("diarize", "true");
+            pairs.append_pair("model", "nova-2-conversationalai");
+            //pairs.append_pair("model", "2-ea");
+            //pairs.append_pair("tier", "nova");
         }
 
         let request = Request::builder()
